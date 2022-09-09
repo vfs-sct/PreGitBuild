@@ -13,12 +13,19 @@ public class Explosion : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Player1" | other.name == "Player2" | other.name == "Player3" | other.name == "Player4")
+        if (other.name == "Player1" || other.name == "Player2" || other.name == "Player3" || other.name == "Player4")
         {
-            if (other.GetComponent<Rigidbody>() != null)
+           
+            if(other.TryGetComponent(out Rigidbody rigidbody))
             {
-                other.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionR, explosionUpwards, ForceMode.Impulse);
+                Vector3 vector = rigidbody.transform.position - transform.position;
+                float distance = vector.magnitude;
+                Vector3 direction = vector.normalized;
+                float magnitude = 1f - Mathf.Pow(Mathf.Clamp01(distance / explosionR), 2f);
+                Vector3 force = direction * magnitude * explosionForce + Vector3.up * explosionUpwards * magnitude;
+                rigidbody.AddForce(force, ForceMode.Impulse);
             }
+
             PlayerController playerController = other.GetComponent<PlayerController>();
             playerController.grounded = false;
             if(parentBomberangMaterial.name == "Player1 (Instance) (Instance)")

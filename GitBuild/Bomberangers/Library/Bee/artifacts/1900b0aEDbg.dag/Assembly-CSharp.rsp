@@ -350,7 +350,9 @@
 "Assets/Scripts/Counter.cs"
 "Assets/Scripts/Explosion.cs"
 "Assets/Scripts/GameModeManager.cs"
+"Assets/Scripts/GymBots.cs"
 "Assets/Scripts/KillZ.cs"
+"Assets/Scripts/PlayerAttractor.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/Score.cs"
 -langversion:9.0

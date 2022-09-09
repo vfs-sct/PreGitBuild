@@ -278,7 +278,39 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(0, dashSpeed.y, 0);
 
     }
-    private void throwBomberang()
+    public void throwBomberang()
+    {
+        if (grounded)
+        {
+            threw = true;
+            cookingBomberang.SetActive(false);
+            //Spanws bomberang according to location faced, grab its core components
+            GameObject bomberangClone = Instantiate(bomberang, bomberangSpawnLocation);
+            Rigidbody bomberangRb = bomberangClone.GetComponent<Rigidbody>();
+            bomberangClone.transform.SetParent(null);
+            bomberangClone.transform.localScale = new Vector3(0.32f, 0.23f, 0.23f);
+            bomberangRb.AddTorque(0, bomberangRotation, 0);
+            //Sets the cooking behaviors on the new spawned bomberangs, keeping the prefab intact (IMPORTANT)
+            cloneBomberangScript = bomberangClone.GetComponent<Bomberang>();
+            cloneBomberangScript.fuse = newFuseTime;
+            cloneBomberangScript.playerToReturn = gameObject.transform;
+            cloneBomberangScript.redMaterial = gameObject.GetComponent<MeshRenderer>().material;
+            //Adds force to bombereangs according to fuse time
+            float timeCooked = newFuseTime - bomberangScript.fuse;
+            if (ExplodeOnForwardGameMode)
+            {
+                Invoke("MakeItDangerang", 0.15f); //Time before becoming dangerang, to avoid it exploding in your face.
+            }
+            if (timeCooked != 0)
+            {
+                bomberangSpeed.x = baseBomberangSpeed.x + (bomberangSpeedModifier * timeCooked);
+                //bomberangSpeed.z = baseBomberangSpeed.z + (bomberangSpeedModifier * timeCooked);
+            }
+            bomberangRb.AddForce(transform.forward * bomberangSpeed.x);
+            ResetSpeed();
+        }
+
+    }public void BotThrowBomberang()
     {
         threw = true;
         cookingBomberang.SetActive(false);
@@ -304,7 +336,7 @@ public class PlayerController : MonoBehaviour
             bomberangSpeed.x = baseBomberangSpeed.x + (bomberangSpeedModifier * timeCooked);
             //bomberangSpeed.z = baseBomberangSpeed.z + (bomberangSpeedModifier * timeCooked);
         }     
-        bomberangRb.AddForce(transform.forward * bomberangSpeed.x);
+        bomberangRb.AddForce(bomberangSpeed);
         ResetSpeed();
 
     }
@@ -325,8 +357,8 @@ public class PlayerController : MonoBehaviour
             otherColRb.velocity = Vector3.zero;
             collision.collider.GetComponent<PlayerController>().grounded = false;
             rb.velocity = Vector3.zero;
-            otherColRb.AddForce(transform.forward * dashSpeed.x);
-            otherColRb.AddForce(0, dashSpeed.y, 0);
+            otherColRb.AddForce(transform.forward * dashKb.x);
+            otherColRb.AddForce(0, dashKb.y, 0);
 
         }
     }
@@ -335,7 +367,15 @@ public class PlayerController : MonoBehaviour
         if (collision.collider.CompareTag("ground"))
         {
             grounded = false;
+        } else if (collision.collider.CompareTag("Wall") | collision.collider.CompareTag("ExplosiveWall") && transform.position.y >= 1)
+        {
+            grounded = false;
         }
+    }
+
+    public void BotCounter()
+    {
+        counter = true;
     }
 
   

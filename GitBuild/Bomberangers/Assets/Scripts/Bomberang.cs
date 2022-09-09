@@ -28,6 +28,8 @@ public class Bomberang : MonoBehaviour
     public float timeToStartReturning; //Used time instead of distance because distance is affected by player movement, and could mislead their instincts. 
     public float iniTimeToStartReturning;
     public float speedCap;
+    [Header("Knockback on unarmed")]
+    [SerializeField] private float unarmedKbForce;
     void Start()
     {
         if (noFuseGameMode)
@@ -67,7 +69,7 @@ public class Bomberang : MonoBehaviour
         
         if (!dangerRang)
         {
-            Physics.IgnoreLayerCollision(6, 7, true); //Ignores between player and bombereang
+            //Physics.IgnoreLayerCollision(6, 7, true); //Ignores between player and bombereang
         }
     }
     // Update is called once per frame
@@ -253,6 +255,15 @@ public class Bomberang : MonoBehaviour
         if (other.CompareTag("player") && dangerRang)
         {
             Explode();
+        } else if (other.CompareTag("player") && !dangerRang)
+        {
+            if (other.TryGetComponent(out Rigidbody rigidbody))
+            {
+                Vector3 vector = rigidbody.transform.position - transform.position;
+                Vector3 direction = vector.normalized;
+                Vector3 force = direction  * unarmedKbForce;
+                rigidbody.AddForce(force, ForceMode.Impulse);
+            }
         }
     }
 

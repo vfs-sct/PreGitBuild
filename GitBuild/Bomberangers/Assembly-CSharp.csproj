@@ -63,6 +63,8 @@
     <Compile Include="Assets\Scripts\Bomberang.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Score.cs" />
+    <Compile Include="Assets\Scripts\GymBots.cs" />
+    <Compile Include="Assets\Scripts\PlayerAttractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

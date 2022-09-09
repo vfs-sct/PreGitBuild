@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/BigScene.unity
+    guid: de8230823f5901a47a01c2b7f68bb703
   m_configObjects: {}

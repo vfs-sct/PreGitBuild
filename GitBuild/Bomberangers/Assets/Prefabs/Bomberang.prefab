@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 7993378551916858525}
   - component: {fileID: -1410070997679967543}
   - component: {fileID: 1947353481323050934}
-  - component: {fileID: 5473003282368177762}
+  - component: {fileID: 4386569018257784692}
   m_Layer: 6
   m_Name: Bomberang
   m_TagString: bomberang
@@ -136,7 +136,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &-1410070997679967543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,9 +154,9 @@ MonoBehaviour:
   fuse: 1.7
   explosion: {fileID: 5374568373848644132, guid: 7cac4f94ca857af4cbd5f731af0c5119, type: 3}
   explosionRadius: {x: 4, y: 4, z: 4}
-  explosionForce: 10
+  explosionForce: 5
   explosionR: 0
-  explosionUpwards: 2
+  explosionUpwards: 10
   defaultFuse: 1
   dangerRang: 0
   wasCountered: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   timeToStartReturning: 1
   iniTimeToStartReturning: 1
   speedCap: 10
+  unarmedKbForce: 15
 --- !u!135 &1947353481323050934
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -185,7 +186,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.57
   m_Center: {x: 0, y: 0, z: -0.43}
---- !u!135 &5473003282368177762
+--- !u!135 &4386569018257784692
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
